@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aigen — AI Management Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --blue:        #2563EB;
+  --blue-dark:   #1E40AF;
+  --blue-dim:    #1e3a6e22;
+  --blue-glow:   #2563eb44;
+  --purple:      #7C3AED;
+  --purple-dim:  #7c3aed22;
+  --orange:      #EA580C;
+  --orange-dim:  #ea580c22;
+  --green:       #059669;
+  --green-dim:   #05966922;
+  --red:         #DC2626;
+  --slate-950:   #020617;
+  --slate-900:   #0F172A;
+  --slate-800:   #1E293B;
+  --slate-700:   #334155;
+  --slate-600:   #475569;
+  --slate-500:   #64748B;
+  --slate-400:   #94A3B8;
+  --slate-300:   #CBD5E1;
+  --slate-200:   #E2E8F0;
+  --slate-100:   #F1F5F9;
+  --slate-50:    #F8FAFC;
+  --white:       #FFFFFF;
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --nav-h:       64px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--slate-950);
+  color:var(--slate-300);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+::selection{background:var(--blue);color:#fff}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--slate-900)}
+::-webkit-scrollbar-thumb{background:var(--slate-700);border-radius:3px}
+
+/* ── NAV ─────────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav-h);
+  background:rgba(2,6,23,.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--slate-800);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;
+}
+.nav-brand{
+  display:flex;align-items:center;gap:.6rem;
+  font-family:var(--font-display);font-size:1.3rem;font-weight:800;
+  color:var(--white);letter-spacing:-.02em;text-decoration:none;
+}
+.nav-brand-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--blue);
+  box-shadow:0 0 12px var(--blue);
+}
+.nav-links{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap}
+.nav-links a{
+  font-family:var(--font-mono);font-size:.7rem;font-weight:500;
+  color:var(--slate-400);text-decoration:none;letter-spacing:.05em;
+  padding:.35rem .7rem;border-radius:6px;
+  transition:color .2s,background .2s;
+}
+.nav-links a:hover{color:var(--white);background:var(--slate-800)}
+.nav-links a.active{color:var(--blue)}
+.nav-cta{
+  font-family:var(--font-mono);font-size:.7rem;font-weight:600;
+  background:var(--blue);color:#fff;border:none;
+  padding:.45rem 1.1rem;border-radius:7px;cursor:pointer;
+  letter-spacing:.05em;text-transform:uppercase;
+  transition:background .2s,box-shadow .2s;
+}
+.nav-cta:hover{background:var(--blue-dark);box-shadow:0 0 20px var(--blue-glow)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.5rem}
+.nav-hamburger span{width:22px;height:2px;background:var(--slate-400);border-radius:2px;transition:.3s}
+
+/* ── SECTIONS ────────────────────────────────────────────────── */
+section{
+  padding:6rem 2rem;
+  max-width:1160px;margin:0 auto;
+}
+.section-full{max-width:100%;padding-left:0;padding-right:0}
+.section-inner{max-width:1160px;margin:0 auto;padding:0 2rem}
+
+/* ── HERO ────────────────────────────────────────────────────── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding-top:calc(var(--nav-h) + 4rem);
+  position:relative;overflow:hidden;
+  max-width:100%;
+}
+.hero-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, #2563eb18 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 80%, #7c3aed0e 0%, transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--slate-800) 1px, transparent 1px),
+    linear-gradient(90deg, var(--slate-800) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(ellipse 70% 50% at 50% 50%, black 0%, transparent 80%);
+  opacity:.35;
+}
+.hero-inner{max-width:1160px;margin:0 auto;padding:0 2rem;position:relative}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:var(--font-mono);font-size:.72rem;font-weight:600;
+  color:var(--blue);letter-spacing:.15em;text-transform:uppercase;
+  border:1px solid var(--blue-dim);background:var(--blue-dim);
+  padding:.35rem .9rem;border-radius:100px;margin-bottom:1.8rem;
+}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(3rem,7vw,5.5rem);
+  font-weight:800;line-height:1.0;
+  letter-spacing:-.03em;color:var(--white);
+  margin-bottom:.5rem;
+}
+h1.hero-title span{color:var(--blue)}
+.hero-sub{
+  font-size:clamp(1rem,2vw,1.2rem);
+  color:var(--slate-400);max-width:580px;
+  line-height:1.7;margin:1.2rem 0 2.5rem;
+  font-weight:300;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem}
+.btn-primary{
+  font-family:var(--font-mono);font-size:.8rem;font-weight:600;
+  background:var(--blue);color:#fff;border:none;cursor:pointer;
+  padding:.75rem 1.8rem;border-radius:9px;letter-spacing:.05em;
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;
+  transition:background .2s,box-shadow .2s,transform .15s;
+}
+.btn-primary:hover{background:var(--blue-dark);box-shadow:0 0 30px var(--blue-glow);transform:translateY(-1px)}
+.btn-secondary{
+  font-family:var(--font-mono);font-size:.8rem;font-weight:600;
+  background:transparent;color:var(--slate-300);
+  border:1px solid var(--slate-700);cursor:pointer;
+  padding:.75rem 1.8rem;border-radius:9px;letter-spacing:.05em;
+  text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.btn-secondary:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--slate-800);
+  border:1px solid var(--slate-800);border-radius:12px;overflow:hidden;
+}
+.hero-stat{
+  background:var(--slate-900);padding:1.5rem;
+  border-top:2px solid transparent;
+  transition:border-color .3s;
+}
+.hero-stat:hover{border-top-color:var(--blue)}
+.hero-stat-val{
+  font-family:var(--font-display);font-size:2rem;font-weight:800;
+  color:var(--white);line-height:1;margin-bottom:.3rem;
+}
+.hero-stat-label{font-family:var(--font-mono);font-size:.68rem;color:var(--slate-500);letter-spacing:.1em;text-transform:uppercase}
+
+/* ── SECTION HEADINGS ────────────────────────────────────────── */
+.sec-eyebrow{
+  font-family:var(--font-mono);font-size:.68rem;font-weight:600;
+  color:var(--blue);letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:.8rem;
+}
+.sec-title{
+  font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);
+  font-weight:800;color:var(--white);letter-spacing:-.02em;
+  line-height:1.1;margin-bottom:1rem;
+}
+.sec-sub{
+  font-size:1rem;color:var(--slate-400);max-width:600px;
+  line-height:1.7;margin-bottom:3rem;font-weight:300;
+}
+.sec-divider{
+  height:1px;background:linear-gradient(90deg,var(--blue),var(--purple),transparent);
+  margin-bottom:3rem;opacity:.4;
+}
+
+/* ── PHASE TABS ──────────────────────────────────────────────── */
+.tab-bar{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.tab-btn{
+  font-family:var(--font-mono);font-size:.72rem;font-weight:600;
+  padding:.5rem 1.2rem;border-radius:8px;cursor:pointer;
+  border:1px solid var(--slate-700);background:transparent;
+  color:var(--slate-400);letter-spacing:.08em;text-transform:uppercase;
+  transition:all .2s;
+}
+.tab-btn.active,.tab-btn:hover{color:#fff}
+.tab-btn[data-phase="1"].active{background:var(--blue);border-color:var(--blue)}
+.tab-btn[data-phase="2"].active{background:var(--purple);border-color:var(--purple)}
+.tab-btn[data-phase="3"].active{background:var(--orange);border-color:var(--orange)}
+.tab-btn[data-phase="1"]:hover:not(.active){border-color:var(--blue);color:var(--blue)}
+.tab-btn[data-phase="2"]:hover:not(.active){border-color:var(--purple);color:var(--purple)}
+.tab-btn[data-phase="3"]:hover:not(.active){border-color:var(--orange);color:var(--orange)}
+.tab-panel{display:none}
+.tab-panel.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1rem}
+.feature-card{
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:12px;padding:1.4rem;
+  transition:border-color .25s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.feature-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--card-accent,var(--blue));
+}
+.feature-card:hover{border-color:var(--card-accent,var(--blue));transform:translateY(-2px)}
+.feature-card-title{
+  font-family:var(--font-display);font-size:1rem;font-weight:700;
+  color:var(--white);margin-bottom:.5rem;
+}
+.feature-card-desc{font-size:.88rem;color:var(--slate-400);line-height:1.6}
+
+/* ── ARCHITECTURE ────────────────────────────────────────────── */
+.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.arch-layer{
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:14px;padding:1.5rem;
+}
+.arch-layer-label{
+  font-family:var(--font-mono);font-size:.65rem;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:1rem;padding:.25rem .7rem;border-radius:5px;
+  display:inline-block;
+}
+.arch-item{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:1rem;padding:.65rem 0;
+  border-bottom:1px solid var(--slate-800);
+}
+.arch-item:last-child{border-bottom:none}
+.arch-item-name{font-size:.9rem;color:var(--white);font-weight:500}
+.arch-item-tech{font-family:var(--font-mono);font-size:.75rem;color:var(--blue);text-align:right;flex-shrink:0}
+.arch-item-note{font-size:.8rem;color:var(--slate-500);margin-top:.15rem}
+
+/* ── DATABASE SCHEMA ─────────────────────────────────────────── */
+.schema-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem}
+.schema-table{
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:12px;overflow:hidden;
+}
+.schema-table-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.8rem 1.1rem;
+  border-bottom:1px solid var(--slate-800);
+}
+.schema-table-name{
+  font-family:var(--font-display);font-size:.95rem;font-weight:700;
+  color:var(--white);
+}
+.schema-table-tag{
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;
+  padding:.2rem .6rem;border-radius:4px;text-transform:uppercase;font-weight:600;
+}
+.schema-field{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:.75rem;padding:.55rem 1.1rem;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.schema-field:last-child{border-bottom:none}
+.schema-field-name{font-family:var(--font-mono);font-size:.78rem;color:var(--slate-200)}
+.schema-field-type{font-family:var(--font-mono);font-size:.7rem;color:var(--slate-500);text-align:right;flex-shrink:0}
+
+/* ── PERMISSIONS ─────────────────────────────────────────────── */
+.perm-table{width:100%;border-collapse:collapse}
+.perm-table th{
+  font-family:var(--font-mono);font-size:.7rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--slate-400);
+  padding:.75rem 1rem;text-align:left;
+  border-bottom:2px solid var(--slate-800);
+  background:var(--slate-900);
+}
+.perm-table th:not(:first-child){text-align:center}
+.perm-table td{
+  padding:.65rem 1rem;font-size:.88rem;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  color:var(--slate-300);
+  transition:background .15s;
+}
+.perm-table tr:hover td{background:rgba(255,255,255,.02)}
+.perm-table td:not(:first-child){text-align:center}
+.check-yes{color:var(--green);font-size:1.1rem}
+.check-no{color:var(--slate-700);font-size:.85rem}
+.check-own{
+  font-family:var(--font-mono);font-size:.65rem;font-weight:600;
+  color:var(--orange);border:1px solid var(--orange-dim);
+  background:var(--orange-dim);padding:.15rem .45rem;border-radius:4px;
+}
+
+/* ── USER FLOWS ──────────────────────────────────────────────── */
+.flow-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.flow-card{
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:14px;overflow:hidden;
+  transition:border-color .25s;
+}
+.flow-card:hover{border-color:var(--slate-600)}
+.flow-header{
+  display:flex;align-items:center;gap:1rem;
+  padding:1.1rem 1.3rem;border-bottom:1px solid var(--slate-800);
+}
+.flow-num{
+  width:32px;height:32px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.75rem;font-weight:700;color:#fff;
+}
+.flow-title{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--white)}
+.flow-actor{
+  font-family:var(--font-mono);font-size:.65rem;margin-top:.2rem;
+  font-weight:600;letter-spacing:.08em;
+}
+.flow-steps{padding:1rem 1.3rem;list-style:none}
+.flow-steps li{
+  display:flex;gap:.7rem;align-items:flex-start;
+  font-size:.85rem;color:var(--slate-400);
+  padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.04);
+  line-height:1.5;
+}
+.flow-steps li:last-child{border-bottom:none}
+.flow-step-num{
+  flex-shrink:0;width:20px;height:20px;border-radius:50%;
+  background:var(--slate-800);display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.65rem;color:var(--slate-400);font-weight:600;
+  margin-top:.15rem;
+}
+
+/* ── API ENDPOINTS ───────────────────────────────────────────── */
+.api-group{margin-bottom:1.5rem}
+.api-group-title{
+  font-family:var(--font-display);font-size:.9rem;font-weight:700;
+  color:var(--white);padding:.6rem 1rem;
+  background:var(--slate-800);border-radius:8px 8px 0 0;
+  border:1px solid var(--slate-700);border-bottom:none;
+  display:flex;align-items:center;gap:.75rem;
+}
+.api-group-dot{width:8px;height:8px;border-radius:50%}
+.api-table{width:100%;border-collapse:collapse;border:1px solid var(--slate-700);border-radius:0 0 8px 8px;overflow:hidden}
+.api-row{display:flex;align-items:stretch;border-bottom:1px solid rgba(255,255,255,.05)}
+.api-row:last-child{border-bottom:none}
+.api-row:hover{background:rgba(255,255,255,.02)}
+.method-badge{
+  flex-shrink:0;width:60px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.65rem;font-weight:700;letter-spacing:.05em;
+}
+.api-path{
+  font-family:var(--font-mono);font-size:.8rem;color:var(--slate-200);
+  padding:.6rem .9rem;flex:1;display:flex;align-items:center;
+  border-left:1px solid rgba(255,255,255,.06);
+}
+.api-desc{
+  font-size:.82rem;color:var(--slate-400);padding:.6rem .9rem;
+  flex:1.2;display:flex;align-items:center;
+  border-left:1px solid rgba(255,255,255,.06);
+}
+
+/* ── SPRINTS ─────────────────────────────────────────────────── */
+.sprint-timeline{position:relative;padding-left:3rem}
+.sprint-timeline::before{
+  content:'';position:absolute;left:.85rem;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,var(--blue),var(--purple),var(--orange),var(--green));
+  opacity:.3;
+}
+.sprint-item{
+  position:relative;margin-bottom:1rem;
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:12px;padding:1.1rem 1.3rem;
+  transition:border-color .2s,transform .2s;
+  cursor:pointer;
+}
+.sprint-item:hover{transform:translateX(4px)}
+.sprint-dot{
+  position:absolute;left:-2.35rem;top:1.1rem;
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:.6rem;font-weight:700;color:#fff;
+  border:2px solid var(--slate-950);
+}
+.sprint-header{display:flex;align-items:center;gap:1rem;justify-content:space-between;flex-wrap:wrap}
+.sprint-title{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--white)}
+.sprint-meta{display:flex;align-items:center;gap:.5rem}
+.sprint-phase-tag{
+  font-family:var(--font-mono);font-size:.63rem;font-weight:600;
+  letter-spacing:.08em;padding:.2rem .6rem;border-radius:5px;text-transform:uppercase;
+}
+.sprint-weeks{font-family:var(--font-mono);font-size:.7rem;color:var(--slate-500)}
+.sprint-desc{font-size:.86rem;color:var(--slate-400);margin-top:.5rem;line-height:1.6;display:none}
+.sprint-item.expanded .sprint-desc{display:block}
+.sprint-chevron{color:var(--slate-500);font-size:.75rem;transition:transform .2s;flex-shrink:0}
+.sprint-item.expanded .sprint-chevron{transform:rotate(180deg)}
+
+/* ── RISKS ───────────────────────────────────────────────────── */
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.risk-card{
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:14px;padding:1.4rem;
+  border-left:3px solid var(--card-accent,var(--blue));
+  transition:transform .2s;
+}
+.risk-card:hover{transform:translateY(-2px)}
+.risk-severity{
+  font-family:var(--font-mono);font-size:.65rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem;
+}
+.risk-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.risk-problem{font-size:.85rem;color:var(--slate-400);line-height:1.6;margin-bottom:.8rem}
+.risk-mitigation-label{
+  font-family:var(--font-mono);font-size:.65rem;font-weight:600;
+  color:var(--green);letter-spacing:.1em;margin-bottom:.35rem;
+}
+.risk-mitigation{font-size:.85rem;color:var(--slate-300);line-height:1.6}
+
+/* ── AI FEATURES ─────────────────────────────────────────────── */
+.ai-features-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--slate-800);border:1px solid var(--slate-800);border-radius:14px;overflow:hidden}
+.ai-feat{
+  background:var(--slate-900);padding:1.5rem;
+  display:flex;gap:1.3rem;align-items:flex-start;
+  transition:background .2s;
+}
+.ai-feat:hover{background:var(--slate-800)}
+.ai-feat-icon{
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;
+}
+.ai-feat-title{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.35rem}
+.ai-feat-desc{font-size:.88rem;color:var(--slate-400);line-height:1.6}
+
+/* ── CODE BLOCKS ─────────────────────────────────────────────── */
+.code-block{
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:12px;overflow:hidden;margin:1.5rem 0;
+}
+.code-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.7rem 1.1rem;background:var(--slate-800);
+  border-bottom:1px solid var(--slate-700);
+}
+.code-lang{font-family:var(--font-mono);font-size:.7rem;color:var(--slate-400);letter-spacing:.08em}
+.code-dots{display:flex;gap:.4rem}
+.code-dot{width:10px;height:10px;border-radius:50%}
+pre{
+  padding:1.3rem 1.4rem;overflow-x:auto;
+  font-family:var(--font-mono);font-size:.78rem;line-height:1.7;
+}
+.code-blue{color:#93C5FD}
+.code-green{color:#86EFAC}
+.code-yellow{color:#FDE68A}
+.code-purple{color:#C4B5FD}
+.code-orange{color:#FCA5A5}
+.code-gray{color:#64748B}
+
+/* ── FOLDER TREE ─────────────────────────────────────────────── */
+.folder-tree{
+  font-family:var(--font-mono);font-size:.8rem;
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:12px;padding:1.3rem 1.5rem;
+  line-height:2;color:var(--slate-400);
+}
+.tree-dir{color:var(--blue)}
+.tree-file{color:var(--slate-300)}
+.tree-comment{color:var(--slate-600)}
+
+/* ── CHECKLIST ───────────────────────────────────────────────── */
+.checklist{list-style:none}
+.checklist li{
+  display:flex;gap:.9rem;align-items:flex-start;
+  padding:.7rem 0;border-bottom:1px solid var(--slate-800);
+  font-size:.9rem;color:var(--slate-300);line-height:1.6;
+}
+.checklist li:last-child{border-bottom:none}
+.check-box{
+  flex-shrink:0;width:22px;height:22px;border-radius:6px;
+  background:var(--green-dim);border:1px solid var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;color:var(--green);margin-top:.15rem;
+}
+
+/* ── DESIGN TOKENS ───────────────────────────────────────────── */
+.tokens-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.token-card{
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:12px;overflow:hidden;
+}
+.token-swatch{height:56px}
+.token-info{padding:.9rem 1rem}
+.token-name{font-family:var(--font-mono);font-size:.8rem;color:var(--white);font-weight:600;margin-bottom:.25rem}
+.token-value{font-family:var(--font-mono);font-size:.72rem;color:var(--slate-400)}
+
+/* ── COMPONENTS LIST ─────────────────────────────────────────── */
+.component-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{
+  font-family:var(--font-mono);font-size:.72rem;
+  background:var(--slate-800);color:var(--slate-300);
+  border:1px solid var(--slate-700);
+  padding:.3rem .75rem;border-radius:100px;
+  transition:border-color .2s,color .2s;
+}
+.chip:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ── CTA / FOOTER ────────────────────────────────────────────── */
+.cta-section{
+  text-align:center;padding:6rem 2rem;
+  background:linear-gradient(180deg,transparent,var(--slate-900));
+}
+.cta-box{
+  max-width:640px;margin:0 auto;
+  background:var(--slate-900);border:1px solid var(--slate-800);
+  border-radius:20px;padding:3rem;position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 0%, var(--blue-dim),transparent);
+  pointer-events:none;
+}
+.cta-title{font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--white);margin-bottom:.75rem;letter-spacing:-.02em}
+.cta-sub{font-size:.95rem;color:var(--slate-400);margin-bottom:2rem;line-height:1.7}
+footer{
+  border-top:1px solid var(--slate-800);
+  padding:2rem;text-align:center;
+  font-family:var(--font-mono);font-size:.72rem;color:var(--slate-600);
+  letter-spacing:.08em;
+}
+footer a{color:var(--slate-500);text-decoration:none}
+footer a:hover{color:var(--blue)}
+
+/* ── UTILITY ─────────────────────────────────────────────────── */
+.badge{
+  font-family:var(--font-mono);font-size:.65rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:.2rem .6rem;border-radius:5px;
+}
+.badge-blue  {background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-glow)}
+.badge-purple{background:var(--purple-dim);color:var(--purple)}
+.badge-orange{background:var(--orange-dim);color:var(--orange)}
+.badge-green {background:var(--green-dim);color:var(--green)}
+.badge-red   {background:#dc262622;color:var(--red)}
+.info-box{
+  background:var(--blue-dim);border:1px solid var(--blue-glow);
+  border-left:3px solid var(--blue);
+  border-radius:10px;padding:1rem 1.3rem;
+  font-size:.9rem;color:var(--slate-300);line-height:1.6;
+  margin-bottom:2rem;
+}
+
+/* ── ANIMATIONS ──────────────────────────────────────────────── */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.fade-in.visible{opacity:1;transform:none}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media(max-width:900px){
+  .arch-grid{grid-template-columns:1fr}
+  .flow-grid{grid-template-columns:1fr}
+  .risk-grid{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .sprint-timeline{padding-left:2rem}
+  section{padding:4rem 1.25rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a class="nav-brand" href="#hero">
+    <span class="nav-brand-dot"></span>Aigen
+  </a>
+  <div class="nav-links" id="nav-links">
+    <a href="#summary">Overview</a>
+    <a href="#features">Features</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#schema">Schema</a>
+    <a href="#permissions">Roles</a>
+    <a href="#flows">Flows</a>
+    <a href="#api">API</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#risks">Risks</a>
+    <a href="#assets">Assets</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('roadmap').scrollIntoView({behavior:'smooth'})">Start Sprint 0 →</button>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">AI Management Platform — Complete Blueprint</div>
+    <h1 class="hero-title">Deploy. Monitor.<br/><span>Govern AI.</span></h1>
+    <p class="hero-sub">Aigen is the centralized platform for AI operations — version prompts, track inference, manage models, and scale from one team to enterprise with full multi-tenant governance.</p>
+    <div class="hero-actions">
+      <a href="#summary" class="btn-primary">Explore Blueprint ↓</a>
+      <a href="#roadmap" class="btn-secondary">View Sprint Plan</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val">3</div>
+        <div class="hero-stat-label">Build Phases</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">13</div>
+        <div class="hero-stat-label">Sprints</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">6</div>
+        <div class="hero-stat-label">User Roles</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">12</div>
+        <div class="hero-stat-label">UI Screens</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 EXECUTIVE SUMMARY -->
+<section id="summary" class="fade-in">
+  <div class="sec-eyebrow">01 / Executive Summary</div>
+  <h2 class="sec-title">Product Overview</h2>
+  <div class="sec-divider"></div>
+  <div class="info-box">
+    <strong>Aigen</strong> is a centralized AI management platform that gives engineering and business teams a single interface to deploy models, version prompts, monitor inference performance, and govern AI operations — growing from a single-team MVP to a full multi-tenant enterprise platform.
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:2.5rem">
+    <div style="background:var(--slate-900);border:1px solid var(--slate-800);border-top:2px solid var(--blue);border-radius:12px;padding:1.3rem">
+      <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--blue);letter-spacing:.15em;margin-bottom:.5rem">TARGET USERS</div>
+      <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--white)">6 Roles</div>
+      <div style="font-size:.82rem;color:var(--slate-500)">Super Admin to Viewer</div>
+    </div>
+    <div style="background:var(--slate-900);border:1px solid var(--slate-800);border-top:2px solid var(--purple);border-radius:12px;padding:1.3rem">
+      <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--purple);letter-spacing:.15em;margin-bottom:.5rem">BUILD PHASES</div>
+      <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--white)">3 Phases</div>
+      <div style="font-size:.82rem;color:var(--slate-500)">MVP → Monitoring → Enterprise</div>
+    </div>
+    <div style="background:var(--slate-900);border:1px solid var(--slate-800);border-top:2px solid var(--orange);border-radius:12px;padding:1.3rem">
+      <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--orange);letter-spacing:.15em;margin-bottom:.5rem">SPRINTS</div>
+      <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--white)">13 × 2w</div>
+      <div style="font-size:.82rem;color:var(--slate-500)">~26 weeks to full launch</div>
+    </div>
+    <div style="background:var(--slate-900);border:1px solid var(--slate-800);border-top:2px solid var(--green);border-radius:12px;padding:1.3rem">
+      <div style="font-family:var(--font-mono);font-size:.65rem;color:var(--green);letter-spacing:.15em;margin-bottom:.5rem">INITIAL USE CASE</div>
+      <div style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--white)">AFH</div>
+      <div style="font-size:.82rem;color:var(--slate-500)">Scales to any application</div>
+    </div>
+  </div>
+  <h3 style="font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:1.2rem">Business Value</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.75rem">
+    <div style="display:flex;gap:.9rem;align-items:flex-start;background:var(--slate-900);border:1px solid var(--slate-800);border-radius:10px;padding:1rem">
+      <span style="font-size:1.3rem;flex-shrink:0">🏛️</span>
+      <div><div style="font-weight:600;color:var(--white);margin-bottom:.25rem">Centralized AI Governance</div><div style="font-size:.82rem;color:var(--slate-400)">Single pane of glass for all AI models and prompts across every team</div></div>
+    </div>
+    <div style="display:flex;gap:.9rem;align-items:flex-start;background:var(--slate-900);border:1px solid var(--slate-800);border-radius:10px;padding:1rem">
+      <span style="font-size:1.3rem;flex-shrink:0">⚡</span>
+      <div><div style="font-weight:600;color:var(--white);margin-bottom:.25rem">Operational Efficiency</div><div style="font-size:.82rem;color:var(--slate-400)">Eliminate duplicated effort; reuse versioned prompt templates</div></div>
+    </div>
+    <div style="display:flex;gap:.9rem;align-items:flex-start;background:var(--slate-900);border:1px solid var(--slate-800);border-radius:10px;padding:1rem">
+      <span style="font-size:1.3rem;flex-shrink:0">💰</span>
+      <div><div style="font-weight:600;color:var(--white);margin-bottom:.25rem">Cost Optimization</div><div style="font-size:.82rem;color:var(--slate-400)">Token usage tracking and alerting prevents runaway AI spend</div></div>
+    </div>
+    <div style="display:flex;gap:.9rem;align-items:flex-start;background:var(--slate-900);border:1px solid var(--slate-800);border-radius:10px;padding:1rem">
+      <span style="font-size:1.3rem;flex-shrink:0">📊</span>
+      <div><div style="font-weight:600;color:var(--white);margin-bottom:.25rem">Performance Insights</div><div style="font-size:.82rem;color:var(--slate-400)">Latency, error rates, and user feedback per model and prompt</div></div>
+    </div>
+    <div style="display:flex;gap:.9rem;align-items:flex-start;background:var(--slate-900);border:1px solid var(--slate-800);border-radius:10px;padding:1rem">
+      <span style="font-size:1.3rem;flex-shrink:0">🌐</span>
+      <div><div style="font-weight:600;color:var(--white);margin-bottom:.25rem">Scalability</div><div style="font-size:.82rem;color:var(--slate-400)">Workspace-based multi-tenancy supports hundreds of teams</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 FEATURES -->
+<section id="features" class="fade-in">
+  <div class="sec-eyebrow">02 / Feature Breakdown</div>
+  <h2 class="sec-title">Phased Feature Breakdown</h2>
+  <div class="sec-divider"></div>
+  <div class="tab-bar">
+    <button class="tab-btn active" data-phase="1" onclick="switchTab(1)">Phase 1 — MVP</button>
+    <button class="tab-btn" data-phase="2" onclick="switchTab(2)">Phase 2 — Monitoring</button>
+    <button class="tab-btn" data-phase="3" onclick="switchTab(3)">Phase 3 — Enterprise</button>
+  </div>
+  <div class="tab-panel active" id="phase1">
+    <div class="feature-card" style="--card-accent:var(--blue)">
+      <div class="feature-card-title">🗂 Model Registry</div>
+      <div class="feature-card-desc">List models, versioning, metadata, and status management across development, staging, and production environments.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--blue)">
+      <div class="feature-card-title">✏️ Prompt Management</div>
+      <div class="feature-card-desc">Create and edit prompt templates with full version history, variable schema, and a live testing playground.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--blue)">
+      <div class="feature-card-title">🔑 API Key Management</div>
+      <div class="feature-card-desc">Generate and revoke API keys for applications with fine-grained scope restrictions and expiry controls.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--blue)">
+      <div class="feature-card-title">📈 Basic Usage Tracking</div>
+      <div class="feature-card-desc">Log each inference request: model used, prompt, timestamp, response time, tokens consumed, and cost.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--blue)">
+      <div class="feature-card-title">👥 User Management</div>
+      <div class="feature-card-desc">Role-based access control with Admin, Developer, and Viewer roles scoped per workspace.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--blue)">
+      <div class="feature-card-title">🎛 Dashboard</div>
+      <div class="feature-card-desc">Overview of active models, recent usage metrics, alert banners, and quick action shortcuts.</div>
+    </div>
+  </div>
+  <div class="tab-panel" id="phase2">
+    <div class="feature-card" style="--card-accent:var(--purple)">
+      <div class="feature-card-title">📊 Usage Analytics</div>
+      <div class="feature-card-desc">Requests, tokens, and cost charted over time. Filter by model, prompt template, or date range.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--purple)">
+      <div class="feature-card-title">⚡ Model Performance</div>
+      <div class="feature-card-desc">Track latency distributions, error rates, and user feedback scores per model and version.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--purple)">
+      <div class="feature-card-title">🔔 Alerting System</div>
+      <div class="feature-card-desc">Define metric thresholds with email and Slack webhook notifications. Configurable cooldown windows.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--purple)">
+      <div class="feature-card-title">🧪 Fine-tuning Jobs</div>
+      <div class="feature-card-desc">Submit datasets, configure hyperparameters, track job status, and auto-register result models.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--purple)">
+      <div class="feature-card-title">🔀 Model Comparison</div>
+      <div class="feature-card-desc">A/B test results between model versions with side-by-side performance and cost metrics.</div>
+    </div>
+  </div>
+  <div class="tab-panel" id="phase3">
+    <div class="feature-card" style="--card-accent:var(--orange)">
+      <div class="feature-card-title">🏢 Multi-Team Workspaces</div>
+      <div class="feature-card-desc">Isolated tenants with per-workspace roles, RLS enforcement, and workspace switcher in the UI.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--orange)">
+      <div class="feature-card-title">🔒 Data Privacy Controls</div>
+      <div class="feature-card-desc">PII anonymization pipeline, field-level encryption for I/O, configurable retention policies.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--orange)">
+      <div class="feature-card-title">✅ Model Governance</div>
+      <div class="feature-card-desc">Approval workflows for promoting models to production. Audit trail on every status change.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--orange)">
+      <div class="feature-card-title">💳 Cost Allocation</div>
+      <div class="feature-card-desc">Track and report token spend broken down by team, project, model, and date range.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--orange)">
+      <div class="feature-card-title">🧠 Explainability Tools</div>
+      <div class="feature-card-desc">Prompt attribution views and inference explanation panels for compliance and debugging.</div>
+    </div>
+    <div class="feature-card" style="--card-accent:var(--orange)">
+      <div class="feature-card-title">🔌 Integration Hub</div>
+      <div class="feature-card-desc">Native connectors for OpenAI, Anthropic, Hugging Face, KServe, and AWS SageMaker.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 ARCHITECTURE -->
+<section id="architecture" class="fade-in">
+  <div class="sec-eyebrow">03 / Architecture</div>
+  <h2 class="sec-title">Scalable System Design</h2>
+  <div class="sec-divider"></div>
+  <p class="sec-sub">Cloud-native, workspace-scoped architecture with Row-Level Security at the database layer. Each component is independently scalable.</p>
+  <div class="arch-grid">
+    <div class="arch-layer">
+      <div class="arch-layer-label" style="background:var(--blue-dim);color:var(--blue)">Frontend</div>
+      <div class="arch-item"><div><div class="arch-item-name">App UI</div><div class="arch-item-note">App Router, SSR/ISR</div></div><div class="arch-item-tech">Next.js 14 + TS</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">Styling</div><div class="arch-item-note">4px grid, dark mode</div></div><div class="arch-item-tech">Tailwind + shadcn/ui</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">State Management</div><div class="arch-item-note">Server + client state</div></div><div class="arch-item-tech">React Query + Zustand</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">Charts</div><div class="arch-item-note">Time-series, bar, pie</div></div><div class="arch-item-tech">Recharts</div></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-label" style="background:var(--purple-dim);color:var(--purple)">Backend</div>
+      <div class="arch-item"><div><div class="arch-item-name">API Layer</div><div class="arch-item-note">REST + WebSocket</div></div><div class="arch-item-tech">Next.js API / Express</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">Background Jobs</div><div class="arch-item-note">Async inference, alerts</div></div><div class="arch-item-tech">BullMQ + Redis</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">Validation</div><div class="arch-item-note">Schema-first, type-safe</div></div><div class="arch-item-tech">Zod</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">AI Client</div><div class="arch-item-note">OpenAI, Anthropic, HF</div></div><div class="arch-item-tech">Unified adapter</div></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-label" style="background:var(--orange-dim);color:var(--orange)">Database</div>
+      <div class="arch-item"><div><div class="arch-item-name">Primary DB</div><div class="arch-item-note">Time-series inference logs</div></div><div class="arch-item-tech">PostgreSQL + TimescaleDB</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">ORM</div><div class="arch-item-note">Type-safe queries</div></div><div class="arch-item-tech">Prisma</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">File Storage</div><div class="arch-item-note">Datasets, artifacts</div></div><div class="arch-item-tech">S3-compatible</div></div>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-layer-label" style="background:var(--green-dim);color:var(--green)">Auth & Security</div>
+      <div class="arch-item"><div><div class="arch-item-name">Auth Provider</div><div class="arch-item-note">JWT + social login</div></div><div class="arch-item-tech">Supabase Auth / Auth0</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">Authorization</div><div class="arch-item-note">JWT roles + API keys</div></div><div class="arch-item-tech">Custom RBAC</div></div>
+      <div class="arch-item"><div><div class="arch-item-name">Multi-Tenant</div><div class="arch-item-note">Row-Level Security</div></div><div class="arch-item-tech">Postgres RLS</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 DATABASE SCHEMA -->
+<section id="schema" class="fade-in">
+  <div class="sec-eyebrow">04 / Database Schema</div>
+  <h2 class="sec-title">Schema Reference</h2>
+  <div class="sec-divider"></div>
+  <div class="info-box">All tables include <strong>id</strong> (UUID PK), <strong>createdAt</strong>, and <strong>updatedAt</strong>. Workspace-scoped tables include <strong>workspaceId</strong> FK. Row-Level Security enforces tenant isolation at the PostgreSQL level.</div>
+  <div class="schema-grid">
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--blue)">
+        <span class="schema-table-name">Workspace</span>
+        <span class="schema-table-tag" style="background:var(--blue-dim);color:var(--blue)">Core</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">name</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">slug</span><span class="schema-field-type">String UNIQUE</span></div>
+      <div class="schema-field"><span class="schema-field-name">settings</span><span class="schema-field-type">JSON?</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--blue)">
+        <span class="schema-table-name">User</span>
+        <span class="schema-table-tag" style="background:var(--blue-dim);color:var(--blue)">Core</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">email</span><span class="schema-field-type">String UNIQUE</span></div>
+      <div class="schema-field"><span class="schema-field-name">passwordHash</span><span class="schema-field-type">String?</span></div>
+      <div class="schema-field"><span class="schema-field-name">firstName / lastName</span><span class="schema-field-type">String?</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--blue)">
+        <span class="schema-table-name">WorkspaceUser</span>
+        <span class="schema-table-tag" style="background:var(--blue-dim);color:var(--blue)">Join</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">workspaceId</span><span class="schema-field-type">FK → Workspace</span></div>
+      <div class="schema-field"><span class="schema-field-name">userId</span><span class="schema-field-type">FK → User</span></div>
+      <div class="schema-field"><span class="schema-field-name">role</span><span class="schema-field-type">Enum Role</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--purple)">
+        <span class="schema-table-name">Model</span>
+        <span class="schema-table-tag" style="background:var(--purple-dim);color:var(--purple)">AI</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">name, description</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">provider</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">modelType</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">version</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">status</span><span class="schema-field-type">Enum Status</span></div>
+      <div class="schema-field"><span class="schema-field-name">configuration</span><span class="schema-field-type">JSON</span></div>
+      <div class="schema-field"><span class="schema-field-name">metadata</span><span class="schema-field-type">JSON?</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--purple)">
+        <span class="schema-table-name">PromptTemplate</span>
+        <span class="schema-table-tag" style="background:var(--purple-dim);color:var(--purple)">AI</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">name, description</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">template</span><span class="schema-field-type">Text</span></div>
+      <div class="schema-field"><span class="schema-field-name">version</span><span class="schema-field-type">Int</span></div>
+      <div class="schema-field"><span class="schema-field-name">modelId</span><span class="schema-field-type">FK → Model?</span></div>
+      <div class="schema-field"><span class="schema-field-name">isActive</span><span class="schema-field-type">Boolean</span></div>
+      <div class="schema-field"><span class="schema-field-name">variables</span><span class="schema-field-type">JSON</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--orange)">
+        <span class="schema-table-name">ApiKey</span>
+        <span class="schema-table-tag" style="background:var(--orange-dim);color:var(--orange)">Auth</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">name</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">keyHash</span><span class="schema-field-type">String (bcrypt)</span></div>
+      <div class="schema-field"><span class="schema-field-name">prefix</span><span class="schema-field-type">String (8 chars)</span></div>
+      <div class="schema-field"><span class="schema-field-name">scopes</span><span class="schema-field-type">JSON</span></div>
+      <div class="schema-field"><span class="schema-field-name">expiresAt</span><span class="schema-field-type">DateTime?</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--orange)">
+        <span class="schema-table-name">InferenceLog</span>
+        <span class="schema-table-tag" style="background:var(--orange-dim);color:var(--orange)">Timeseries</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">modelId / promptId</span><span class="schema-field-type">FK? (optional)</span></div>
+      <div class="schema-field"><span class="schema-field-name">input / output</span><span class="schema-field-type">Text (encrypted)</span></div>
+      <div class="schema-field"><span class="schema-field-name">tokens</span><span class="schema-field-type">JSON</span></div>
+      <div class="schema-field"><span class="schema-field-name">latencyMs, cost</span><span class="schema-field-type">Int / Decimal</span></div>
+      <div class="schema-field"><span class="schema-field-name">status</span><span class="schema-field-type">Enum</span></div>
+      <div class="schema-field"><span class="schema-field-name">timestamp</span><span class="schema-field-type">DateTime (indexed)</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--green)">
+        <span class="schema-table-name">FineTuningJob</span>
+        <span class="schema-table-tag" style="background:var(--green-dim);color:var(--green)">ML</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">baseModelId</span><span class="schema-field-type">FK → Model</span></div>
+      <div class="schema-field"><span class="schema-field-name">datasetFileUrl</span><span class="schema-field-type">String (S3)</span></div>
+      <div class="schema-field"><span class="schema-field-name">status</span><span class="schema-field-type">Enum</span></div>
+      <div class="schema-field"><span class="schema-field-name">hyperparameters</span><span class="schema-field-type">JSON</span></div>
+      <div class="schema-field"><span class="schema-field-name">resultModelId</span><span class="schema-field-type">FK → Model?</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--green)">
+        <span class="schema-table-name">Alert</span>
+        <span class="schema-table-tag" style="background:var(--green-dim);color:var(--green)">Ops</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">name</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">condition</span><span class="schema-field-type">JSON</span></div>
+      <div class="schema-field"><span class="schema-field-name">enabled</span><span class="schema-field-type">Boolean</span></div>
+      <div class="schema-field"><span class="schema-field-name">notificationChannels</span><span class="schema-field-type">JSON</span></div>
+      <div class="schema-field"><span class="schema-field-name">lastTriggeredAt</span><span class="schema-field-type">DateTime?</span></div>
+    </div>
+
+    <div class="schema-table">
+      <div class="schema-table-header" style="border-top:2px solid var(--slate-500)">
+        <span class="schema-table-name">AuditLog</span>
+        <span class="schema-table-tag" style="background:var(--slate-800);color:var(--slate-400)">Compliance</span>
+      </div>
+      <div class="schema-field"><span class="schema-field-name">userId</span><span class="schema-field-type">FK → User</span></div>
+      <div class="schema-field"><span class="schema-field-name">action</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">resourceType / resourceId</span><span class="schema-field-type">String</span></div>
+      <div class="schema-field"><span class="schema-field-name">details</span><span class="schema-field-type">JSON</span></div>
+      <div class="schema-field"><span class="schema-field-name">ipAddress</span><span class="schema-field-type">String</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 05 PERMISSIONS -->
+<section id="permissions" class="fade-in">
+  <div class="sec-eyebrow">05 / Roles & Permissions</div>
+  <h2 class="sec-title">User Permissions Matrix</h2>
+  <div class="sec-divider"></div>
+  <p class="sec-sub">The global <strong>SUPER_ADMIN</strong> role bypasses all workspace checks. Users can hold different roles in different workspaces. "Own" = access limited to their own created resources.</p>
+  <div style="overflow-x:auto;border:1px solid var(--slate-800);border-radius:14px;overflow:hidden">
+    <table class="perm-table">
+      <thead>
+        <tr>
+          <th style="width:55%">Permission</th>
+          <th>Workspace Admin</th>
+          <th>Developer</th>
+          <th>Viewer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Manage workspace settings</td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Manage workspace users</td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Create / edit models</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Delete models</td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Deploy models to production</td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Create / edit prompt templates</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Delete prompt templates</td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Test prompts in playground</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Generate / revoke API keys</td><td><span class="check-yes">✓</span></td><td><span class="check-own">own</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>View usage logs</td><td><span class="check-yes">✓</span></td><td><span class="check-own">own</span></td><td><span class="check-yes">✓</span></td></tr>
+        <tr><td>View analytics dashboard</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td></tr>
+        <tr><td>Create / edit alerts</td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>Submit fine-tuning jobs</td><td><span class="check-yes">✓</span></td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td></tr>
+        <tr><td>View audit logs</td><td><span class="check-yes">✓</span></td><td><span class="check-no">–</span></td><td><span class="check-no">–</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 06 UI PAGES & 07 USER FLOWS (combined) -->
+<section id="flows" class="fade-in">
+  <div class="sec-eyebrow">06–07 / UI & User Flows</div>
+  <h2 class="sec-title">Key Scenario Walkthroughs</h2>
+  <div class="sec-divider"></div>
+  <div class="flow-grid">
+    <div class="flow-card">
+      <div class="flow-header">
+        <div class="flow-num" style="background:var(--blue)">01</div>
+        <div><div class="flow-title">Register a New Model</div><div class="flow-actor" style="color:var(--blue)">Developer</div></div>
+      </div>
+      <ul class="flow-steps">
+        <li><span class="flow-step-num">1</span>Navigate to Models → New Model</li>
+        <li><span class="flow-step-num">2</span>Enter name, provider, model type, and version</li>
+        <li><span class="flow-step-num">3</span>Paste or fill JSON configuration (temperature, max_tokens…)</li>
+        <li><span class="flow-step-num">4</span>Save → model created with status DEVELOPMENT</li>
+        <li><span class="flow-step-num">5</span>Audit log entry recorded automatically</li>
+      </ul>
+    </div>
+    <div class="flow-card">
+      <div class="flow-header">
+        <div class="flow-num" style="background:var(--blue)">02</div>
+        <div><div class="flow-title">Create a Prompt Template</div><div class="flow-actor" style="color:var(--blue)">Developer</div></div>
+      </div>
+      <ul class="flow-steps">
+        <li><span class="flow-step-num">1</span>Navigate to Prompt Library → New Template</li>
+        <li><span class="flow-step-num">2</span>Enter name, description, and template body with &#123;&#123;variable&#125;&#125; placeholders</li>
+        <li><span class="flow-step-num">3</span>Define variables schema (name, type, default)</li>
+        <li><span class="flow-step-num">4</span>Save → version 1 created; previous versions preserved</li>
+        <li><span class="flow-step-num">5</span>Template immediately available in playground</li>
+      </ul>
+    </div>
+    <div class="flow-card">
+      <div class="flow-header">
+        <div class="flow-num" style="background:var(--purple)">03</div>
+        <div><div class="flow-title">Test a Prompt in Playground</div><div class="flow-actor" style="color:var(--purple)">Developer</div></div>
+      </div>
+      <ul class="flow-steps">
+        <li><span class="flow-step-num">1</span>Open any prompt template → Playground tab</li>
+        <li><span class="flow-step-num">2</span>Fill in variable values in the sidebar form</li>
+        <li><span class="flow-step-num">3</span>Select target model from dropdown</li>
+        <li><span class="flow-step-num">4</span>Click Run → live inference call made</li>
+        <li><span class="flow-step-num">5</span>Output shown alongside latency, token count, and cost</li>
+      </ul>
+    </div>
+    <div class="flow-card">
+      <div class="flow-header">
+        <div class="flow-num" style="background:var(--purple)">04</div>
+        <div><div class="flow-title">Generate an API Key</div><div class="flow-actor" style="color:var(--purple)">Developer</div></div>
+      </div>
+      <ul class="flow-steps">
+        <li><span class="flow-step-num">1</span>Navigate to API Keys → Generate Key</li>
+        <li><span class="flow-step-num">2</span>Name the key and select scopes (inference, read, admin)</li>
+        <li><span class="flow-step-num">3</span>Optionally set an expiry date</li>
+        <li><span class="flow-step-num">4</span>System generates key — raw value shown ONCE only</li>
+        <li><span class="flow-step-num">5</span>Subsequent views show only the 8-character prefix</li>
+      </ul>
+    </div>
+    <div class="flow-card">
+      <div class="flow-header">
+        <div class="flow-num" style="background:var(--green)">05</div>
+        <div><div class="flow-title">Monitor Usage Analytics</div><div class="flow-actor" style="color:var(--green)">Business Analyst</div></div>
+      </div>
+      <ul class="flow-steps">
+        <li><span class="flow-step-num">1</span>Navigate to Usage Analytics</li>
+        <li><span class="flow-step-num">2</span>Set date range (last 7d / 30d / custom)</li>
+        <li><span class="flow-step-num">3</span>Filter by model or prompt template</li>
+        <li><span class="flow-step-num">4</span>Review requests, token consumption, cost, error rate</li>
+        <li><span class="flow-step-num">5</span>Export CSV for reporting</li>
+      </ul>
+    </div>
+    <div class="flow-card">
+      <div class="flow-header">
+        <div class="flow-num" style="background:var(--green)">06</div>
+        <div><div class="flow-title">Set Up an Alert</div><div class="flow-actor" style="color:var(--green)">Workspace Admin</div></div>
+      </div>
+      <ul class="flow-steps">
+        <li><span class="flow-step-num">1</span>Navigate to Alerts → New Alert</li>
+        <li><span class="flow-step-num">2</span>Name the alert and define condition (e.g. error_rate &gt; 5%)</li>
+        <li><span class="flow-step-num">3</span>Set evaluation window (e.g. 10-minute rolling)</li>
+        <li><span class="flow-step-num">4</span>Add notification channels: email or Slack webhook</li>
+        <li><span class="flow-step-num">5</span>Enable and save — alert fires when threshold is crossed</li>
+      </ul>
+    </div>
+    <div class="flow-card">
+      <div class="flow-header">
+        <div class="flow-num" style="background:var(--orange)">07</div>
+        <div><div class="flow-title">Submit a Fine-tuning Job</div><div class="flow-actor" style="color:var(--orange)">ML Engineer</div></div>
+      </div>
+      <ul class="flow-steps">
+        <li><span class="flow-step-num">1</span>Navigate to Fine-tuning → New Job</li>
+        <li><span class="flow-step-num">2</span>Select base model, upload JSONL dataset to S3</li>
+        <li><span class="flow-step-num">3</span>Configure hyperparameters (epochs, learning rate, batch size)</li>
+        <li><span class="flow-step-num">4</span>Submit — job status: PENDING → RUNNING → COMPLETE</li>
+        <li><span class="flow-step-num">5</span>Result model auto-registered in Model Registry</li>
+      </ul>
+    </div>
+    <div class="flow-card">
+      <div class="flow-header">
+        <div class="flow-num" style="background:var(--orange)">08</div>
+        <div><div class="flow-title">Promote Model to Production</div><div class="flow-actor" style="color:var(--orange)">Workspace Admin</div></div>
+      </div>
+      <ul class="flow-steps">
+        <li><span class="flow-step-num">1</span>Open Model detail view → Versions tab</li>
+        <li><span class="flow-step-num">2</span>Select a version in STAGING status</li>
+        <li><span class="flow-step-num">3</span>Click Promote to Production — confirmation dialog shown</li>
+        <li><span class="flow-step-num">4</span>Status updated; inference traffic routes to new version</li>
+        <li><span class="flow-step-num">5</span>Audit log entry created with timestamp and actor</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 08 API -->
+<section id="api" class="fade-in">
+  <div class="sec-eyebrow">08 / API Design</div>
+  <h2 class="sec-title">Core Endpoint Reference</h2>
+  <div class="sec-divider"></div>
+  <div class="info-box">All endpoints require JWT auth (except <code style="font-family:var(--font-mono);color:var(--blue)">/api/auth/*</code>). Workspace endpoints follow <code style="font-family:var(--font-mono);color:var(--blue)">/api/workspaces/:workspaceId/…</code>. Inference endpoints use <code style="font-family:var(--font-mono);color:var(--blue)">X-Api-Key</code> header.</div>
+
+  <div class="api-group">
+    <div class="api-group-title"><span class="api-group-dot" style="background:var(--green)"></span>Authentication</div>
+    <div style="border:1px solid var(--slate-700);border-top:none;border-radius:0 0 8px 8px;overflow:hidden">
+      <div class="api-row"><div class="method-badge" style="background:#05966922;color:var(--green)">POST</div><div class="api-path">/api/auth/login</div><div class="api-desc">Email/password or OAuth callback</div></div>
+      <div class="api-row"><div class="method-badge" style="background:#05966922;color:var(--green)">POST</div><div class="api-path">/api/auth/logout</div><div class="api-desc">Invalidate current session</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/auth/me</div><div class="api-desc">Current user profile and workspaces</div></div>
+    </div>
+  </div>
+  <div class="api-group">
+    <div class="api-group-title"><span class="api-group-dot" style="background:var(--blue)"></span>Workspaces</div>
+    <div style="border:1px solid var(--slate-700);border-top:none;border-radius:0 0 8px 8px;overflow:hidden">
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/workspaces</div><div class="api-desc">List workspaces for current user</div></div>
+      <div class="api-row"><div class="method-badge" style="background:#05966922;color:var(--green)">POST</div><div class="api-path">/api/workspaces</div><div class="api-desc">Create a new workspace</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/workspaces/:workspaceId</div><div class="api-desc">Workspace detail and settings</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--orange-dim);color:var(--orange)">PUT</div><div class="api-path">/api/workspaces/:workspaceId</div><div class="api-desc">Update workspace name and settings</div></div>
+    </div>
+  </div>
+  <div class="api-group">
+    <div class="api-group-title"><span class="api-group-dot" style="background:var(--purple)"></span>Models</div>
+    <div style="border:1px solid var(--slate-700);border-top:none;border-radius:0 0 8px 8px;overflow:hidden">
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/workspaces/:workspaceId/models</div><div class="api-desc">List models with filters and pagination</div></div>
+      <div class="api-row"><div class="method-badge" style="background:#05966922;color:var(--green)">POST</div><div class="api-path">/api/workspaces/:workspaceId/models</div><div class="api-desc">Register a new model</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/models/:modelId</div><div class="api-desc">Model detail with version history</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--orange-dim);color:var(--orange)">PUT</div><div class="api-path">/api/models/:modelId</div><div class="api-desc">Update model (creates new version)</div></div>
+      <div class="api-row"><div class="method-badge" style="background:#dc262622;color:var(--red)">DELETE</div><div class="api-path">/api/models/:modelId</div><div class="api-desc">Soft-delete model record</div></div>
+    </div>
+  </div>
+  <div class="api-group">
+    <div class="api-group-title"><span class="api-group-dot" style="background:var(--purple)"></span>Prompt Templates</div>
+    <div style="border:1px solid var(--slate-700);border-top:none;border-radius:0 0 8px 8px;overflow:hidden">
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/workspaces/:workspaceId/prompts</div><div class="api-desc">List templates with version metadata</div></div>
+      <div class="api-row"><div class="method-badge" style="background:#05966922;color:var(--green)">POST</div><div class="api-path">/api/workspaces/:workspaceId/prompts</div><div class="api-desc">Create new template</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/prompts/:promptId</div><div class="api-desc">Template detail + version history</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--orange-dim);color:var(--orange)">PUT</div><div class="api-path">/api/prompts/:promptId</div><div class="api-desc">Save new version</div></div>
+      <div class="api-row"><div class="method-badge" style="background:#dc262622;color:var(--red)">DELETE</div><div class="api-path">/api/prompts/:promptId</div><div class="api-desc">Archive template</div></div>
+    </div>
+  </div>
+  <div class="api-group">
+    <div class="api-group-title"><span class="api-group-dot" style="background:var(--orange)"></span>Inference & Usage</div>
+    <div style="border:1px solid var(--slate-700);border-top:none;border-radius:0 0 8px 8px;overflow:hidden">
+      <div class="api-row"><div class="method-badge" style="background:#05966922;color:var(--green)">POST</div><div class="api-path">/api/inference</div><div class="api-desc">Run inference — X-Api-Key header required</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/workspaces/:id/logs</div><div class="api-desc">Paginated logs with date range filter</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/workspaces/:id/analytics</div><div class="api-desc">Aggregated metrics (tokens, cost, errors)</div></div>
+    </div>
+  </div>
+  <div class="api-group">
+    <div class="api-group-title"><span class="api-group-dot" style="background:var(--green)"></span>Fine-tuning & Alerts</div>
+    <div style="border:1px solid var(--slate-700);border-top:none;border-radius:0 0 8px 8px;overflow:hidden">
+      <div class="api-row"><div class="method-badge" style="background:#05966922;color:var(--green)">POST</div><div class="api-path">/api/workspaces/:id/finetuning</div><div class="api-desc">Submit a fine-tuning job</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--blue-dim);color:var(--blue)">GET</div><div class="api-path">/api/finetuning/:jobId</div><div class="api-desc">Job status and result model</div></div>
+      <div class="api-row"><div class="method-badge" style="background:#05966922;color:var(--green)">POST</div><div class="api-path">/api/workspaces/:id/alerts</div><div class="api-desc">Create alert with condition and channels</div></div>
+      <div class="api-row"><div class="method-badge" style="background:var(--orange-dim);color:var(--orange)">PUT</div><div class="api-path">/api/alerts/:alertId</div><div class="api-desc">Update condition, channels, or enabled state</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 ROADMAP -->
+<section id="roadmap" class="fade-in">
+  <div class="sec-eyebrow">09 / Build Roadmap</div>
+  <h2 class="sec-title">Sprint Plan — 13 Sprints</h2>
+  <div class="sec-divider"></div>
+  <p class="sec-sub">Each sprint is 2 weeks. The MVP (Sprints 0–4) delivers a working product. Click any sprint to expand details.</p>
+  <div class="sprint-timeline">
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--blue)">0</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Foundation & Setup</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-blue">MVP</span><span class="sprint-weeks">Weeks 1–2</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">PostgreSQL + TimescaleDB, Prisma migrations, Supabase Auth, workspace creation flow, RBAC middleware, CI/CD pipeline on Vercel.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--blue)">1</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Model Registry</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-blue">MVP</span><span class="sprint-weeks">Weeks 3–4</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Model CRUD API and UI, status badge system (DEV/STAGING/PROD), version history data model, basic JSON config editor.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--blue)">2</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Prompt Management</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-blue">MVP</span><span class="sprint-weeks">Weeks 5–6</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Prompt template CRUD, version increment logic, variable schema editor, prompt list UI with search and filters.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--blue)">3</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">API Keys & Inference Logging</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-blue">MVP</span><span class="sprint-weeks">Weeks 7–8</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">API key generation (bcrypt hash), scope system, inference POST endpoint, InferenceLog write path, Redis BullMQ job queue setup.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--blue)">4</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Dashboard & MVP Complete</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-blue">MVP</span><span class="sprint-weeks">Weeks 9–10</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Dashboard overview widgets, usage log list view, role-gate all endpoints, end-to-end testing, internal MVP demo. <strong style="color:var(--green)">✓ MVP Milestone</strong></div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--purple)">5</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Analytics Charts</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-purple">Phase 2</span><span class="sprint-weeks">Weeks 11–12</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Recharts time-series: requests over time, top models, token consumption, cost trend. Date range and model filters. TimescaleDB continuous aggregates.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--purple)">6</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Alerting System</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-purple">Phase 2</span><span class="sprint-weeks">Weeks 13–14</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Alert condition builder UI, BullMQ evaluation job (rolling windows), email + Slack webhook notification dispatch, cooldown logic.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--purple)">7</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Fine-tuning Jobs</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-purple">Phase 2</span><span class="sprint-weeks">Weeks 15–16</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Dataset S3 upload, job submission to provider API, status polling loop, result model auto-registration, fine-tuning UI list and detail view.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--orange)">8</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Multi-Workspace & Invitations</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-orange">Phase 3</span><span class="sprint-weeks">Weeks 17–18</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Workspace switcher, user invitation flow (email link), per-workspace role assignment, RLS policy audit with automated test coverage.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--orange)">9</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Advanced Filtering & Performance</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-orange">Phase 3</span><span class="sprint-weeks">Weeks 19–20</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Log pagination and CSV export, query optimization (indexes, TimescaleDB aggregates), Redis caching layer for analytics queries.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--orange)">10</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Audit Logs & Compliance</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-orange">Phase 3</span><span class="sprint-weeks">Weeks 21–22</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">AuditLog write hooks on all mutations, audit log viewer UI (admin only), data retention configuration, PII anonymization pipeline.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--orange)">11</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">External Provider Integrations</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-orange">Phase 3</span><span class="sprint-weeks">Weeks 23–24</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">Unified AI client adapter (OpenAI, Anthropic, Hugging Face), provider credential storage, integration hub settings page with connection testing.</div>
+    </div>
+    <div class="sprint-item" onclick="toggleSprint(this)">
+      <div class="sprint-dot" style="background:var(--green)">12</div>
+      <div class="sprint-header">
+        <div><span class="sprint-title">Testing, Docs & Launch</span></div>
+        <div class="sprint-meta"><span class="sprint-phase-tag badge-green">Launch</span><span class="sprint-weeks">Weeks 25–26</span><span class="sprint-chevron">▼</span></div>
+      </div>
+      <div class="sprint-desc">E2E test suite (Playwright), OpenAPI spec generation, developer docs site, security audit (RLS, rate limiting, key hashing), production deployment. <strong style="color:var(--green)">✓ Launch</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 RISKS -->
+<section id="risks" class="fade-in">
+  <div class="sec-eyebrow">10 / Risks & Recommendations</div>
+  <h2 class="sec-title">Known Risks & Mitigations</h2>
+  <div class="sec-divider"></div>
+  <div class="risk-grid">
+    <div class="risk-card" style="--card-accent:var(--red)">
+      <div class="risk-severity" style="color:var(--red)">🔴 High — Data Privacy</div>
+      <div class="risk-title">Sensitive Data in Prompts</div>
+      <div class="risk-problem">Prompts and model outputs may contain PII or sensitive business data stored in inference logs.</div>
+      <div class="risk-mitigation-label">✓ MITIGATION</div>
+      <div class="risk-mitigation">Field-level encryption for input/output columns. PII anonymization pipeline on ingest. Configurable retention policies per workspace.</div>
+    </div>
+    <div class="risk-card" style="--card-accent:var(--orange)">
+      <div class="risk-severity" style="color:var(--orange)">🟠 Medium — Cost</div>
+      <div class="risk-title">Runaway API Cost Overruns</div>
+      <div class="risk-problem">Unthrottled inference calls can generate unexpected provider API costs at scale.</div>
+      <div class="risk-mitigation-label">✓ MITIGATION</div>
+      <div class="risk-mitigation">Real-time token usage alerts. Per-API-key rate limiting via Redis. Cost estimation shown in playground before submission.</div>
+    </div>
+    <div class="risk-card" style="--card-accent:var(--orange)">
+      <div class="risk-severity" style="color:var(--orange)">🟠 Medium — Reliability</div>
+      <div class="risk-title">Model Performance Variability</div>
+      <div class="risk-problem">Provider outages or silent model degradation can impact end users without detection.</div>
+      <div class="risk-mitigation-label">✓ MITIGATION</div>
+      <div class="risk-mitigation">Circuit breaker pattern on inference client. Automatic fallback model routing. Error rate alerts with sub-5-minute detection.</div>
+    </div>
+    <div class="risk-card" style="--card-accent:var(--purple)">
+      <div class="risk-severity" style="color:var(--purple)">🟣 Critical — Security</div>
+      <div class="risk-title">Multi-Tenant Isolation Breach</div>
+      <div class="risk-problem">Cross-workspace data leakage would be a critical security incident with legal consequences.</div>
+      <div class="risk-mitigation-label">✓ MITIGATION</div>
+      <div class="risk-mitigation">Strict Postgres RLS policies on every table. Automated RLS audit tests in CI. Penetration testing before Phase 3 launch.</div>
+    </div>
+    <div class="risk-card" style="--card-accent:var(--blue)">
+      <div class="risk-severity" style="color:var(--blue)">🔵 Medium — Performance</div>
+      <div class="risk-title">Inference Log Volume</div>
+      <div class="risk-problem">High-traffic workspaces can generate millions of InferenceLog rows, degrading query performance.</div>
+      <div class="risk-mitigation-label">✓ MITIGATION</div>
+      <div class="risk-mitigation">TimescaleDB hypertable with time partitioning. Continuous aggregates for analytics. Archiving policy for logs over 90 days.</div>
+    </div>
+    <div class="risk-card" style="--card-accent:var(--blue)">
+      <div class="risk-severity" style="color:var(--blue)">🔵 Low — Complexity</div>
+      <div class="risk-title">Integration Complexity</div>
+      <div class="risk-problem">Each AI provider has different APIs, auth patterns, and response formats requiring ongoing maintenance.</div>
+      <div class="risk-mitigation-label">✓ MITIGATION</div>
+      <div class="risk-mitigation">Unified adapter interface built in Sprint 0. Providers added behind feature flags. Each adapter has its own integration test suite.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 AI FEATURES -->
+<section id="ai-features" class="fade-in">
+  <div class="sec-eyebrow">11 / AI Feature Suggestions</div>
+  <h2 class="sec-title">AI Capabilities Within Aigen</h2>
+  <div class="sec-divider"></div>
+  <p class="sec-sub">Beyond managing external AI, Aigen applies AI internally to improve its own usability — surfacing insights that would otherwise require manual analysis.</p>
+  <div class="ai-features-grid">
+    <div class="ai-feat">
+      <div class="ai-feat-icon" style="background:var(--blue-dim)">✨</div>
+      <div>
+        <div class="ai-feat-title">Prompt Optimization Suggestions</div>
+        <div class="ai-feat-desc">Analyses historical inference logs to suggest edits to prompt templates that correlate with lower latency, fewer errors, and higher user ratings. Surfaced as inline suggestions in the Prompt Library editor.</div>
+      </div>
+    </div>
+    <div class="ai-feat">
+      <div class="ai-feat-icon" style="background:var(--purple-dim)">🔍</div>
+      <div>
+        <div class="ai-feat-title">Anomaly Detection in Usage Patterns</div>
+        <div class="ai-feat-desc">Statistical baseline model (rolling average + standard deviation) flags unusual spikes in request volume, error rate, or cost — generating alerts automatically without manual threshold configuration.</div>
+      </div>
+    </div>
+    <div class="ai-feat">
+      <div class="ai-feat-icon" style="background:var(--orange-dim)">📈</div>
+      <div>
+        <div class="ai-feat-title">Cost Forecasting</div>
+        <div class="ai-feat-desc">Time-series forecasting (Prophet or ARIMA) projects token spend for the next 7 and 30 days based on growth trends. Shown as a confidence band chart on the Analytics dashboard.</div>
+      </div>
+    </div>
+    <div class="ai-feat">
+      <div class="ai-feat-icon" style="background:var(--green-dim)">🎯</div>
+      <div>
+        <div class="ai-feat-title">Model Recommendation Engine</div>
+        <div class="ai-feat-desc">Given a task description (classification, summarisation, RAG, etc.), suggests the best registered model based on historical performance data and cost-per-token trade-offs.</div>
+      </div>
+    </div>
+    <div class="ai-feat">
+      <div class="ai-feat-icon" style="background:var(--slate-800)">🧬</div>
+      <div>
+        <div class="ai-feat-title">Fine-tuning Hyperparameter Advisor</div>
+        <div class="ai-feat-desc">Before job submission, an LLM-powered advisor analyses dataset size and task type, then recommends epoch count, learning rate, and batch size with reasoning — reducing trial-and-error cycles significantly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 ASSETS -->
+<section id="assets" class="fade-in">
+  <div class="sec-eyebrow">12 / Implementation Assets</div>
+  <h2 class="sec-title">Code, Structure & Tokens</h2>
+  <div class="sec-divider"></div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:1rem">Folder Structure — Next.js App Router</h3>
+  <div class="folder-tree">
+    <div><span class="tree-dir">aigen/</span></div>
+    <div>├── <span class="tree-dir">app/</span></div>
+    <div>│   ├── <span class="tree-dir">(auth)/</span></div>
+    <div>│   │   ├── <span class="tree-file">login/page.tsx</span></div>
+    <div>│   │   └── <span class="tree-file">layout.tsx</span></div>
+    <div>│   ├── <span class="tree-dir">(dashboard)/</span></div>
+    <div>│   │   ├── <span class="tree-dir">workspace/[workspaceId]/</span></div>
+    <div>│   │   │   ├── <span class="tree-dir">models/</span>  <span class="tree-comment"># list + [modelId] detail</span></div>
+    <div>│   │   │   ├── <span class="tree-dir">prompts/</span>  <span class="tree-comment"># library + playground</span></div>
+    <div>│   │   │   ├── <span class="tree-dir">apikeys/</span></div>
+    <div>│   │   │   ├── <span class="tree-dir">analytics/</span></div>
+    <div>│   │   │   ├── <span class="tree-dir">finetuning/</span></div>
+    <div>│   │   │   ├── <span class="tree-dir">alerts/</span></div>
+    <div>│   │   │   └── <span class="tree-dir">settings/</span></div>
+    <div>│   │   └── <span class="tree-file">page.tsx</span>  <span class="tree-comment"># workspace dashboard</span></div>
+    <div>│   ├── <span class="tree-dir">api/</span></div>
+    <div>│   │   ├── <span class="tree-dir">auth/</span></div>
+    <div>│   │   ├── <span class="tree-dir">workspaces/[workspaceId]/</span></div>
+    <div>│   │   │   ├── <span class="tree-file">models/route.ts</span></div>
+    <div>│   │   │   ├── <span class="tree-file">prompts/route.ts</span></div>
+    <div>│   │   │   ├── <span class="tree-file">apikeys/route.ts</span></div>
+    <div>│   │   │   ├── <span class="tree-file">analytics/route.ts</span></div>
+    <div>│   │   │   └── <span class="tree-file">logs/route.ts</span></div>
+    <div>│   │   └── <span class="tree-file">inference/route.ts</span></div>
+    <div>│   └── <span class="tree-file">layout.tsx</span></div>
+    <div>├── <span class="tree-dir">components/</span></div>
+    <div>│   ├── <span class="tree-dir">ui/</span>  <span class="tree-comment"># shadcn/ui</span></div>
+    <div>│   ├── <span class="tree-dir">models/</span></div>
+    <div>│   ├── <span class="tree-dir">prompts/</span></div>
+    <div>│   └── <span class="tree-dir">charts/</span></div>
+    <div>├── <span class="tree-dir">lib/</span></div>
+    <div>│   ├── <span class="tree-file">db.ts</span>  <span class="tree-comment"># Prisma client singleton</span></div>
+    <div>│   ├── <span class="tree-file">auth.ts</span>  <span class="tree-comment"># Session helpers</span></div>
+    <div>│   ├── <span class="tree-dir">ai/</span>  <span class="tree-comment"># Provider adapters</span></div>
+    <div>│   └── <span class="tree-dir">validations/</span>  <span class="tree-comment"># Zod schemas</span></div>
+    <div>├── <span class="tree-dir">prisma/</span></div>
+    <div>│   └── <span class="tree-file">schema.prisma</span></div>
+    <div>└── <span class="tree-dir">public/</span></div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--white);margin:2rem 0 1rem">Starter Prisma Schema</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot" style="background:#ef4444"></div><div class="code-dot" style="background:#f59e0b"></div><div class="code-dot" style="background:#10b981"></div></div>
+      <span class="code-lang">prisma</span>
+    </div>
+    <pre><span class="code-blue">model</span> <span class="code-green">Workspace</span> {
+  id        <span class="code-purple">String</span>          <span class="code-orange">@id @default</span>(cuid())
+  name      <span class="code-purple">String</span>
+  slug      <span class="code-purple">String</span>          <span class="code-orange">@unique</span>
+  settings  <span class="code-purple">Json</span>?
+  users     <span class="code-green">WorkspaceUser</span>[]
+  models    <span class="code-green">Model</span>[]
+  prompts   <span class="code-green">PromptTemplate</span>[]
+  apiKeys   <span class="code-green">ApiKey</span>[]
+  logs      <span class="code-green">InferenceLog</span>[]
+  createdAt <span class="code-purple">DateTime</span>        <span class="code-orange">@default</span>(now())
+  updatedAt <span class="code-purple">DateTime</span>        <span class="code-orange">@updatedAt</span>
+}
+
+<span class="code-blue">model</span> <span class="code-green">Model</span> {
+  id          <span class="code-purple">String</span>    <span class="code-orange">@id @default</span>(cuid())
+  workspaceId <span class="code-purple">String</span>
+  workspace   <span class="code-green">Workspace</span> <span class="code-orange">@relation</span>(fields: [workspaceId], references: [id])
+  name        <span class="code-purple">String</span>
+  provider    <span class="code-purple">String</span>
+  modelType   <span class="code-purple">String</span>
+  version     <span class="code-purple">String</span>
+  status      <span class="code-green">Status</span>    <span class="code-orange">@default</span>(DEV)
+  config      <span class="code-purple">Json</span>
+  createdAt   <span class="code-purple">DateTime</span>  <span class="code-orange">@default</span>(now())
+  updatedAt   <span class="code-purple">DateTime</span>  <span class="code-orange">@updatedAt</span>
+}
+
+<span class="code-blue">enum</span> <span class="code-green">Status</span> { DEV STAGING PRODUCTION }
+<span class="code-blue">enum</span> <span class="code-green">Role</span>   { WORKSPACE_ADMIN DEVELOPER VIEWER }</pre>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--white);margin:2rem 0 1rem">Sample API Route — POST /models</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot" style="background:#ef4444"></div><div class="code-dot" style="background:#f59e0b"></div><div class="code-dot" style="background:#10b981"></div></div>
+      <span class="code-lang">TypeScript — app/api/workspaces/[workspaceId]/models/route.ts</span>
+    </div>
+    <pre><span class="code-blue">import</span> { <span class="code-green">NextRequest</span>, <span class="code-green">NextResponse</span> } <span class="code-blue">from</span> <span class="code-yellow">'next/server'</span>;
+<span class="code-blue">import</span> { <span class="code-green">prisma</span> } <span class="code-blue">from</span> <span class="code-yellow">'@/lib/db'</span>;
+<span class="code-blue">import</span> { <span class="code-green">getSession</span> } <span class="code-blue">from</span> <span class="code-yellow">'@/lib/auth'</span>;
+<span class="code-blue">import</span> { <span class="code-green">modelCreateSchema</span> } <span class="code-blue">from</span> <span class="code-yellow">'@/lib/validations'</span>;
+
+<span class="code-blue">export async function</span> <span class="code-green">POST</span>(
+  req: <span class="code-green">NextRequest</span>,
+  { params }: { params: { workspaceId: <span class="code-purple">string</span> } }
+) {
+  <span class="code-blue">const</span> session = <span class="code-blue">await</span> <span class="code-green">getSession</span>();
+  <span class="code-blue">if</span> (!session)
+    <span class="code-blue">return</span> <span class="code-green">NextResponse</span>.json({ error: <span class="code-yellow">'Unauthorized'</span> }, { status: <span class="code-purple">401</span> });
+
+  <span class="code-blue">const</span> membership = <span class="code-blue">await</span> prisma.workspaceUser.<span class="code-green">findUnique</span>({
+    where: { workspaceId_userId: {
+      workspaceId: params.workspaceId, userId: session.userId
+    }}
+  });
+  <span class="code-blue">if</span> (!membership || !['WORKSPACE_ADMIN','DEVELOPER'].<span class="code-green">includes</span>(membership.role))
+    <span class="code-blue">return</span> <span class="code-green">NextResponse</span>.json({ error: <span class="code-yellow">'Forbidden'</span> }, { status: <span class="code-purple">403</span> });
+
+  <span class="code-blue">const</span> body    = <span class="code-blue">await</span> req.<span class="code-green">json</span>();
+  <span class="code-blue">const</span> payload = modelCreateSchema.<span class="code-green">parse</span>(body);
+
+  <span class="code-blue">const</span> model = <span class="code-blue">await</span> prisma.model.<span class="code-green">create</span>({
+    data: { ...payload, workspaceId: params.workspaceId, createdBy: session.userId }
+  });
+
+  <span class="code-blue">await</span> prisma.auditLog.<span class="code-green">create</span>({ data: {
+    userId: session.userId, workspaceId: params.workspaceId,
+    action: <span class="code-yellow">'CREATE'</span>, resourceType: <span class="code-yellow">'Model'</span>,
+    resourceId: model.id, details: payload
+  }});
+
+  <span class="code-blue">return</span> <span class="code-green">NextResponse</span>.json(model, { status: <span class="code-purple">201</span> });
+}</pre>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--white);margin:2rem 0 1rem">Design System Tokens</h3>
+  <div class="tokens-grid">
+    <div class="token-card"><div class="token-swatch" style="background:#2563EB"></div><div class="token-info"><div class="token-name">--blue (Primary)</div><div class="token-value">#2563EB — CTAs, links, interactive</div></div></div>
+    <div class="token-card"><div class="token-swatch" style="background:#7C3AED"></div><div class="token-info"><div class="token-name">--purple (Secondary)</div><div class="token-value">#7C3AED — AI features, model badges</div></div></div>
+    <div class="token-card"><div class="token-swatch" style="background:#EA580C"></div><div class="token-info"><div class="token-name">--orange (Accent)</div><div class="token-value">#EA580C — Alerts, warnings, destructive</div></div></div>
+    <div class="token-card"><div class="token-swatch" style="background:#059669"></div><div class="token-info"><div class="token-name">--green (Success)</div><div class="token-value">#059669 — Production status, success</div></div></div>
+    <div class="token-card"><div class="token-swatch" style="background:#0F172A;border-top:1px solid #334155"></div><div class="token-info"><div class="token-name">--slate-900 (Background)</div><div class="token-value">#0F172A — Page and card backgrounds</div></div></div>
+    <div class="token-card"><div class="token-swatch" style="background:#1E293B"></div><div class="token-info"><div class="token-name">--slate-800 (Borders)</div><div class="token-value">#1E293B — Card borders, dividers</div></div></div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--white);margin:2rem 0 1rem">shadcn/ui Component List</h3>
+  <div class="component-chips">
+    <span class="chip">Button</span><span class="chip">Input</span><span class="chip">Label</span><span class="chip">Card</span><span class="chip">Table</span><span class="chip">Dialog</span><span class="chip">Alert</span><span class="chip">DropdownMenu</span><span class="chip">Tabs</span><span class="chip">Select</span><span class="chip">Checkbox</span><span class="chip">Textarea</span><span class="chip">Toast</span><span class="chip">Badge</span><span class="chip">Progress</span><span class="chip">Separator</span><span class="chip">Sheet</span><span class="chip">Command</span><span class="chip">Popover</span><span class="chip">Tooltip</span><span class="chip">Recharts (LineChart)</span><span class="chip">Recharts (BarChart)</span><span class="chip">Recharts (AreaChart)</span>
+  </div>
+
+  <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--white);margin:2rem 0 1rem">Deployment Checklist</h3>
+  <ul class="checklist">
+    <li><span class="check-box">✓</span>Provision PostgreSQL with TimescaleDB extension enabled</li>
+    <li><span class="check-box">✓</span>Create hypertable on InferenceLog.timestamp</li>
+    <li><span class="check-box">✓</span>Configure Redis instance for BullMQ background jobs</li>
+    <li><span class="check-box">✓</span>Create S3-compatible bucket for dataset and artifact storage</li>
+    <li><span class="check-box">✓</span>Set all environment variables (DB URL, Redis URL, OpenAI key, auth secrets)</li>
+    <li><span class="check-box">✓</span>Run <code style="font-family:var(--font-mono);color:var(--blue);font-size:.85rem">prisma migrate deploy</code> in production</li>
+    <li><span class="check-box">✓</span>Deploy frontend and API to Vercel (or self-hosted Docker / Fly.io)</li>
+    <li><span class="check-box">✓</span>Configure custom domain and TLS certificate</li>
+    <li><span class="check-box">✓</span>Enable Sentry for error tracking; Logtail for structured logs</li>
+    <li><span class="check-box">✓</span>Security audit: verify RLS policies, API key hashing, rate limiting</li>
+    <li><span class="check-box">✓</span>Generate OpenAPI spec and publish developer documentation</li>
+    <li><span class="check-box">✓</span>Run load test against /api/inference before public launch</li>
+  </ul>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-box">
+    <div class="cta-title">Ready to Build Aigen?</div>
+    <div class="cta-sub">This blueprint gives your team everything needed to begin Sprint 0 today. Architecture, schema, code samples, and a 26-week roadmap — all in one place.</div>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="#roadmap" class="btn-primary">Begin Sprint 0 →</a>
+      <a href="#assets" class="btn-secondary">View Code Assets</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:.5rem">
+    <a href="#summary">Overview</a> &nbsp;·&nbsp;
+    <a href="#features">Features</a> &nbsp;·&nbsp;
+    <a href="#architecture">Architecture</a> &nbsp;·&nbsp;
+    <a href="#schema">Schema</a> &nbsp;·&nbsp;
+    <a href="#api">API</a> &nbsp;·&nbsp;
+    <a href="#roadmap">Roadmap</a> &nbsp;·&nbsp;
+    <a href="#assets">Assets</a>
+  </div>
+  <div>Aigen — AI Management Platform Blueprint &nbsp;·&nbsp; v1.0 — 2025 &nbsp;·&nbsp; Confidential</div>
+</footer>
+
+<script>
+// Tab switching
+function switchTab(phase) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-phase="${phase}"]`).classList.add('active');
+  document.getElementById(`phase${phase}`).classList.add('active');
+}
+
+// Sprint expand/collapse
+function toggleSprint(el) {
+  el.classList.toggle('expanded');
+}
+
+// Mobile nav
+function toggleMobileNav() {
+  const links = document.getElementById('nav-links');
+  links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+  links.style.flexDirection = 'column';
+  links.style.position = 'absolute';
+  links.style.top = '64px';
+  links.style.left = '0';
+  links.style.right = '0';
+  links.style.background = 'rgba(2,6,23,.97)';
+  links.style.padding = '1rem 2rem';
+  links.style.borderBottom = '1px solid #1E293B';
+  links.style.zIndex = '99';
+}
+
+// Active nav highlighting
+const sections = document.querySelectorAll('section[id], div[id="hero"]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-64px 0px 0px 0px' });
+sections.forEach(s => observer.observe(s));
+
+// Scroll fade-in
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); fadeObserver.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+</script>
+</body>
+</html>
